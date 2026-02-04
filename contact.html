@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - Bài tập JavaScript</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-header h1 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            margin-bottom: 0.3rem;
+            color: var(--secondary-color);
+        }
+
+        .contact-details p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .form-message {
+            display: none;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .form-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>JS Exercises</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="baitap01.html"><i class="fas fa-shopping-cart"></i> Bài 1: Sản phẩm</a></li>
+                    <li><a href="baitap02.html"><i class="fas fa-user-plus"></i> Bài 2: Đăng ký</a></li>
+                    <li><a href="baitap03.html"><i class="fas fa-clock"></i> Bài 3: Đồng hồ</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> Giới thiệu</a></li>
+                    <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Liên hệ</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h1><i class="fas fa-envelope"></i> Liên hệ</h1>
+                <p>Liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Thông tin liên hệ</h2>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Sinh viên</h3>
+                            <p>MSSV: 710-12345</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Trường học</h3>
+                            <p>Đại học Công nghệ Thông tin</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Môn học</h3>
+                            <p>Lập trình JavaScript</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email liên hệ</h3>
+                            <p>student@example.com</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h2>Gửi tin nhắn</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName" class="form-label">
+                                <i class="fas fa-user"></i> Họ tên *
+                            </label>
+                            <input type="text" id="contactName" class="form-input" placeholder="Nhập họ tên của bạn"
+                                maxlength="50" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail" class="form-label">
+                                <i class="fas fa-envelope"></i> Email *
+                            </label>
+                            <input type="email" id="contactEmail" class="form-input" placeholder="email@example.com"
+                                maxlength="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactSubject" class="form-label">
+                                <i class="fas fa-tag"></i> Tiêu đề
+                            </label>
+                            <input type="text" id="contactSubject" class="form-input" placeholder="Tiêu đề tin nhắn"
+                                maxlength="100">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage" class="form-label">
+                                <i class="fas fa-comment"></i> Nội dung *
+                            </label>
+                            <textarea id="contactMessage" class="form-textarea"
+                                placeholder="Nhập nội dung tin nhắn của bạn..." maxlength="1000" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit-btn">
+                            <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                        </button>
+
+                        <div id="formMessage" class="form-message"></div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="logic-explanation">
+                <h3><i class="fas fa-brain"></i> Logic Tư Duy & Giải Thích:</h3>
+                <p><strong>1. Xử lý form an toàn:</strong></p>
+                <ul>
+                    <li><strong>Client-side validation:</strong> Kiểm tra input trước khi gửi</li>
+                    <li><strong>Sanitization:</strong> Loại bỏ các ký tự nguy hiểm khỏi input</li>
+                    <li><strong>XSS prevention:</strong> Escape HTML khi hiển thị dữ liệu</li>
+                    <li><strong>Length limits:</strong> Giới hạn độ dài input hợp lý</li>
+                </ul>
+
+                <p><strong>2. UX/UI considerations:</strong></p>
+                <ul>
+                    <li><strong>Clear feedback:</strong> Hiển thị thông báo thành công/lỗi rõ ràng</li>
+                    <li><strong>Progress indication:</strong> Hiển thị trạng thái khi đang gửi</li>
+                    <li><strong>Accessible forms:</strong> Sử dụng đúng label, ARIA attributes</li>
+                    <li><strong>Responsive layout:</strong> Hiển thị tốt trên mọi thiết bị</li>
+                </ul>
+
+                <p><strong>3. Form submission handling:</strong></p>
+                <ul>
+                    <li><strong>Prevent default:</strong> Ngăn chặn reload trang khi submit</li>
+                    <li><strong>Form reset:</strong> Reset form sau khi gửi thành công</li>
+                    <li><strong>Data persistence:</strong> Có thể lưu draft vào LocalStorage</li>
+                    <li><strong>Spam prevention:</strong> Có thể thêm captcha nếu cần</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Quay lại trang chủ
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Thông tin</h3>
+                    <p><i class="fas fa-user"></i> MSSV: 710-12345</p>
+                    <p><i class="fas fa-book"></i> Môn học: JavaScript Programming</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Bài tập</h3>
+                    <ul>
+                        <li><a href="baitap01.html">Bài 1: Sản phẩm</a></li>
+                        <li><a href="baitap02.html">Bài 2: Đăng ký</a></li>
+                        <li><a href="baitap03.html">Bài 3: Đồng hồ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Bài tập JavaScript. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Initialize contact form
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactForm = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+
+            // Load saved draft if exists
+            loadFormDraft();
+
+            // Auto-save draft as user types
+            let saveDraftTimeout;
+            const inputs = contactForm.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    clearTimeout(saveDraftTimeout);
+                    saveDraftTimeout = setTimeout(saveFormDraft, 1000);
+                });
+            });
+
+            // Handle form submission
+            contactForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Validate form
+                if (!validateContactForm()) {
+                    return;
+                }
+
+                // Get form data
+                const formData = {
+                    name: sanitizeInput(document.getElementById('contactName').value.trim()),
+                    email: sanitizeInput(document.getElementById('contactEmail').value.trim()),
+                    subject: sanitizeInput(document.getElementById('contactSubject').value.trim()),
+                    message: sanitizeInput(document.getElementById('contactMessage').value.trim()),
+                    timestamp: new Date().toLocaleString('vi-VN')
+                };
+
+                // In a real application, you would send this to a server
+                // For this demo, we'll simulate sending and show success message
+                simulateFormSubmission(formData);
+            });
+
+            // Clear draft when form is successfully submitted
+            contactForm.addEventListener('submit', function () {
+                localStorage.removeItem('contact_form_draft');
+            });
+        });
+
+        // Validate contact form
+        function validateContactForm() {
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+            const formMessage = document.getElementById('formMessage');
+
+            // Clear previous message
+            formMessage.className = 'form-message';
+            formMessage.textContent = '';
+
+            // Validate name
+            if (name.length < 2) {
+                showFormError('Vui lòng nhập họ tên hợp lệ (ít nhất 2 ký tự)');
+                return false;
+            }
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showFormError('Vui lòng nhập email hợp lệ');
+                return false;
+            }
+
+            // Validate message
+            if (message.length < 10) {
+                showFormError('Vui lòng nhập nội dung tin nhắn (ít nhất 10 ký tự)');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Show form error message
+        function showFormError(message) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.className = 'form-message error';
+            formMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            formMessage.style.display = 'block';
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Show form success message
+        function showFormSuccess(message) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.className = 'form-message success';
+            formMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            formMessage.style.display = 'block';
+        }
+
+        // Simulate form submission
+        function simulateFormSubmission(formData) {
+            const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+
+            // Simulate API call delay
+            setTimeout(() => {
+                // Save to LocalStorage (simulating database)
+                saveContactMessage(formData);
+
+                // Show success message
+                showFormSuccess('Tin nhắn đã được gửi thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất.');
+
+                // Reset form
+                document.getElementById('contactForm').reset();
+
+                // Clear draft
+                localStorage.removeItem('contact_form_draft');
+
+                // Restore button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('formMessage').style.display = 'none';
+                }, 5000);
+            }, 1500);
+        }
+
+        // Save contact message to LocalStorage
+        function saveContactMessage(formData) {
+            try {
+                // Get existing messages
+                const messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+
+                // Add new message
+                messages.push({
+                    ...formData,
+                    id: Date.now()
+                });
+
+                // Keep only last 50 messages
+                if (messages.length > 50) {
+                    messages.shift();
+                }
+
+                // Save to LocalStorage
+                localStorage.setItem('contact_messages', JSON.stringify(messages));
+            } catch (e) {
+                console.error('Error saving contact message:', e);
+            }
+        }
+
+        // Save form draft to LocalStorage
+        function saveFormDraft() {
+            try {
+                const draft = {
+                    name: document.getElementById('contactName').value,
+                    email: document.getElementById('contactEmail').value,
+                    subject: document.getElementById('contactSubject').value,
+                    message: document.getElementById('contactMessage').value,
+                    savedAt: Date.now()
+                };
+
+                localStorage.setItem('contact_form_draft', JSON.stringify(draft));
+            } catch (e) {
+                console.error('Error saving form draft:', e);
+            }
+        }
+
+        // Load form draft from LocalStorage
+        function loadFormDraft() {
+            try {
+                const draft = JSON.parse(localStorage.getItem('contact_form_draft'));
+
+                if (draft) {
+                    // Check if draft is older than 1 hour
+                    const hoursSinceSave = (Date.now() - draft.savedAt) / (1000 * 60 * 60);
+
+                    if (hoursSinceSave < 1) { // Load draft if less than 1 hour old
+                        document.getElementById('contactName').value = draft.name || '';
+                        document.getElementById('contactEmail').value = draft.email || '';
+                        document.getElementById('contactSubject').value = draft.subject || '';
+                        document.getElementById('contactMessage').value = draft.message || '';
+                    } else {
+                        // Remove old draft
+                        localStorage.removeItem('contact_form_draft');
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading form draft:', e);
+            }
+        }
+
+        // Sanitize input to prevent XSS
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>
