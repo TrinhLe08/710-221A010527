@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1: Danh sách sản phẩm</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .products-container {
+            padding: 2rem 0;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .product-price {
+            color: var(--success-color);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-category {
+            display: inline-block;
+            background-color: #e9ecef;
+            color: #666;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .logic-explanation {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 3rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .logic-explanation h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .logic-explanation ul {
+            margin-left: 1.5rem;
+        }
+
+        .logic-explanation li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>JS Exercises</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="baitap01.html" class="active"><i class="fas fa-shopping-cart"></i> Bài 1: Sản phẩm</a>
+                    </li>
+                    <li><a href="baitap02.html"><i class="fas fa-user-plus"></i> Bài 2: Đăng ký</a></li>
+                    <li><a href="baitap03.html"><i class="fas fa-clock"></i> Bài 3: Đồng hồ</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> Giới thiệu</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="exercise-container">
+            <div class="exercise-header">
+                <h1><i class="fas fa-shopping-cart"></i> Bài 1: Danh sách sản phẩm</h1>
+                <p>Tìm kiếm sản phẩm theo tên (không phân biệt hoa thường)</p>
+            </div>
+
+            <div class="products-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Nhập tên sản phẩm để tìm kiếm...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+
+                <div id="productsGrid" class="products-grid">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+
+                <div id="noResults" class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>Không tìm thấy sản phẩm</h3>
+                    <p>Không có sản phẩm nào phù hợp với từ khóa tìm kiếm của bạn.</p>
+                </div>
+
+                <div class="logic-explanation">
+                    <h3><i class="fas fa-brain"></i> Logic Tư Duy & Giải Thích:</h3>
+                    <p><strong>1. Xử lý input an toàn:</strong></p>
+                    <ul>
+                        <li>Sử dụng <code>textContent</code> thay vì <code>innerHTML</code> để tránh XSS</li>
+                        <li>Escape special characters trong input tìm kiếm</li>
+                        <li>Giới hạn độ dài input (maxlength trong HTML)</li>
+                    </ul>
+
+                    <p><strong>2. Tối ưu tìm kiếm:</strong></p>
+                    <ul>
+                        <li>Debounce để giảm số lần gọi hàm tìm kiếm</li>
+                        <li>Chuyển đổi cả input và tên sản phẩm về chữ thường để so sánh</li>
+                        <li>Lưu trữ sản phẩm trong mảng để tìm kiếm nhanh hơn DOM</li>
+                    </ul>
+
+                    <p><strong>3. Hiệu suất:</strong></p>
+                    <ul>
+                        <li>Chỉ re-render phần cần thiết (Virtual DOM pattern đơn giản)</li>
+                        <li>Sử dụng DocumentFragment để batch DOM updates</li>
+                        <li>Cache kết quả tìm kiếm cho các input giống nhau</li>
+                    </ul>
+                </div>
+
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang chủ
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Thông tin</h3>
+                    <p><i class="fas fa-user"></i> MSSV: 710-12345</p>
+                    <p><i class="fas fa-book"></i> Môn học: JavaScript Programming</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Bài tập</h3>
+                    <ul>
+                        <li><a href="baitap01.html">Bài 1: Sản phẩm</a></li>
+                        <li><a href="baitap02.html">Bài 2: Đăng ký</a></li>
+                        <li><a href="baitap03.html">Bài 3: Đồng hồ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Bài tập JavaScript. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Dữ liệu sản phẩm
+        const products = [
+            {
+                id: 1,
+                name: "Laptop Dell XPS 13",
+                price: "29.990.000₫",
+                category: "Điện tử",
+                description: "Laptop siêu mỏng nhẹ, màn hình InfinityEdge, hiệu năng mạnh mẽ với Intel Core i7 thế hệ 11.",
+                icon: "fas fa-laptop"
+            },
+            {
+                id: 2,
+                name: "iPhone 14 Pro Max",
+                price: "32.990.000₫",
+                category: "Điện thoại",
+                description: "Smartphone flagship của Apple với camera 48MP, chip A16 Bionic và màn hình Dynamic Island.",
+                icon: "fas fa-mobile-alt"
+            },
+            {
+                id: 3,
+                name: "Tai nghe Sony WH-1000XM5",
+                price: "7.990.000₫",
+                category: "Phụ kiện",
+                description: "Tai nghe chống ồn tốt nhất với công nghệ ANC tiên tiến và thời lượng pin 30 giờ.",
+                icon: "fas fa-headphones"
+            },
+            {
+                id: 4,
+                name: "Apple Watch Series 8",
+                price: "12.990.000₫",
+                category: "Đồng hồ",
+                description: "Đồng hồ thông minh với tính năng đo nhiệt độ, cảm biến sức khỏe và thiết kế sang trọng.",
+                icon: "fas fa-clock"
+            },
+            {
+                id: 5,
+                name: "Máy ảnh Canon EOS R6",
+                price: "45.990.000₫",
+                category: "Máy ảnh",
+                description: "Máy ảnh mirrorless full-frame với chống rung 8-stop và quay video 4K 60fps.",
+                icon: "fas fa-camera"
+            },
+            {
+                id: 6,
+                name: "Loa JBL Charge 5",
+                price: "3.990.000₫",
+                category: "Âm thanh",
+                description: "Loa Bluetooth chống nước IP67, âm bass mạnh mẽ, thời lượng pin 20 giờ.",
+                icon: "fas fa-volume-up"
+            },
+            {
+                id: 7,
+                name: "Bàn phím cơ Logitech MX",
+                price: "2.990.000₫",
+                category: "Phụ kiện",
+                description: "Bàn phím cơ không dây với switch tactile, đèn RGB và kết nối đa thiết bị.",
+                icon: "fas fa-keyboard"
+            },
+            {
+                id: 8,
+                name: "Màn hình Samsung Odyssey",
+                price: "15.990.000₫",
+                category: "Màn hình",
+                description: "Màn hình gaming 34 inch cong, độ phân giải QHD, tần số quét 165Hz.",
+                icon: "fas fa-desktop"
+            }
+        ];
+
+        // Khởi tạo
+        document.addEventListener('DOMContentLoaded', function () {
+            renderProducts(products);
+            setupSearch();
+        });
+
+        // Render sản phẩm
+        function renderProducts(productsToRender) {
+            const container = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (productsToRender.length === 0) {
+                container.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+
+            // Sử dụng DocumentFragment để tối ưu
+            const fragment = document.createDocumentFragment();
+
+            productsToRender.forEach(product => {
+                const productCard = createProductCard(product);
+                fragment.appendChild(productCard);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(fragment);
+        }
+
+        // Tạo card sản phẩm
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-image">
+                    <i class="${product.icon}"></i>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">${escapeHTML(product.name)}</h3>
+                    <div class="product-price">${product.price}</div>
+                    <span class="product-category">${escapeHTML(product.category)}</span>
+                    <p class="product-description">${escapeHTML(product.description)}</p>
+                </div>
+            `;
+            return card;
+        }
+
+        // Escape HTML để tránh XSS
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Cài đặt tìm kiếm
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            let debounceTimer;
+
+            searchInput.addEventListener('input', function (e) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    performSearch(e.target.value);
+                }, 300); // Debounce 300ms
+            });
+
+            // Xử lý Enter để tìm kiếm ngay
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    clearTimeout(debounceTimer);
+                    performSearch(e.target.value);
+                }
+            });
+        }
+
+        // Thực hiện tìm kiếm
+        function performSearch(searchTerm) {
+            const term = searchTerm.trim().toLowerCase();
+
+            if (term === '') {
+                renderProducts(products);
+                return;
+            }
+
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(term) ||
+                product.category.toLowerCase().includes(term) ||
+                product.description.toLowerCase().includes(term)
+            );
+
+            renderProducts(filteredProducts);
+        }
+    </script>
+</body>
+
+</html>

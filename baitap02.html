@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2: Form đăng ký người dùng</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .registration-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 5px;
+            background-color: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-meter {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .strength-weak {
+            background-color: var(--danger-color);
+            width: 33%;
+        }
+
+        .strength-medium {
+            background-color: var(--warning-color);
+            width: 66%;
+        }
+
+        .strength-strong {
+            background-color: var(--success-color);
+            width: 100%;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 0.3rem;
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-group label {
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .checkbox-group a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-reset {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .users-table-container {
+            margin-top: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .users-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .users-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .users-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .no-users {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        .logic-explanation {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 3rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .logic-explanation h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .logic-explanation ul {
+            margin-left: 1.5rem;
+        }
+
+        .logic-explanation li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>JS Exercises</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="baitap01.html"><i class="fas fa-shopping-cart"></i> Bài 1: Sản phẩm</a></li>
+                    <li><a href="baitap02.html" class="active"><i class="fas fa-user-plus"></i> Bài 2: Đăng ký</a></li>
+                    <li><a href="baitap03.html"><i class="fas fa-clock"></i> Bài 3: Đồng hồ</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> Giới thiệu</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="exercise-container">
+            <div class="exercise-header">
+                <h1><i class="fas fa-user-plus"></i> Bài 2: Form đăng ký người dùng</h1>
+                <p>Đăng ký tài khoản với validation và lưu trữ LocalStorage</p>
+            </div>
+
+            <div class="form-container">
+                <form id="registrationForm" class="registration-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">
+                            <i class="fas fa-user"></i> Họ và tên *
+                        </label>
+                        <input type="text" id="name" class="form-input" placeholder="Nhập họ và tên đầy đủ"
+                            maxlength="50">
+                        <div class="error-message" id="nameError">
+                            Vui lòng nhập họ tên (tối thiểu 2 ký tự)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i> Email *
+                        </label>
+                        <input type="email" id="email" class="form-input" placeholder="example@gmail.com"
+                            maxlength="100">
+                        <div class="error-message" id="emailError">
+                            Vui lòng nhập email hợp lệ
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Mật khẩu *
+                        </label>
+                        <input type="password" id="password" class="form-input"
+                            placeholder="Nhập mật khẩu (ít nhất 8 ký tự)" maxlength="50">
+                        <div class="error-message" id="passwordError">
+                            Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số
+                        </div>
+                        <div class="password-strength">
+                            <div id="strengthMeter" class="strength-meter"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">
+                            <i class="fas fa-lock"></i> Xác nhận mật khẩu *
+                        </label>
+                        <input type="password" id="confirmPassword" class="form-input" placeholder="Nhập lại mật khẩu"
+                            maxlength="50">
+                        <div class="error-message" id="confirmPasswordError">
+                            Mật khẩu xác nhận không khớp
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms">
+                        <label for="terms">
+                            Tôi đồng ý với <a href="#" id="termsLink">Điều khoản dịch vụ</a> và
+                            <a href="#" id="privacyLink">Chính sách bảo mật</a> *
+                        </label>
+                    </div>
+                    <div class="error-message" id="termsError">
+                        Bạn phải đồng ý với điều khoản để tiếp tục
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fas fa-user-plus"></i> Đăng ký
+                        </button>
+                        <button type="reset" class="btn btn-reset" id="resetBtn">
+                            <i class="fas fa-redo"></i> Nhập lại
+                        </button>
+                    </div>
+
+                    <div id="successMessage" class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Đăng ký thành công!</strong> Thông tin của bạn đã được lưu.
+                    </div>
+                </form>
+
+                <div class="users-table-container">
+                    <h3><i class="fas fa-users"></i> Danh sách người dùng đã đăng ký</h3>
+                    <table class="users-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Ngày đăng ký</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                    <div id="noUsers" class="no-users">
+                        <i class="fas fa-users-slash"></i>
+                        <p>Chưa có người dùng nào đăng ký</p>
+                    </div>
+                </div>
+
+                <div class="logic-explanation">
+                    <h3><i class="fas fa-brain"></i> Logic Tư Duy & Giải Thích:</h3>
+                    <p><strong>1. Xử lý sự kiện submit:</strong></p>
+                    <ul>
+                        <li>Ngăn chặn hành vi mặc định của form với <code>preventDefault()</code></li>
+                        <li>Validate tất cả trường trước khi xử lý</li>
+                        <li>Real-time validation trên từng trường (on input/blur)</li>
+                        <li>Hiển thị lỗi cụ thể cho từng trường</li>
+                    </ul>
+
+                    <p><strong>2. Bảo mật dữ liệu cục bộ:</strong></p>
+                    <ul>
+                        <li><strong>Không lưu mật khẩu gốc:</strong> Chỉ lưu hash của mật khẩu</li>
+                        <li><strong>Sanitize input:</strong> Loại bỏ các ký tự đặc biệt nguy hiểm</li>
+                        <li><strong>XSS prevention:</strong> Escape HTML khi hiển thị dữ liệu</li>
+                        <li><strong>Giới hạn LocalStorage:</strong> Chỉ lưu tối đa 50 user</li>
+                        <li><strong>Xóa dữ liệu nhạy cảm:</strong> Cung cấp option xóa user</li>
+                    </ul>
+
+                    <p><strong>3. UX/UI improvements:</strong></p>
+                    <ul>
+                        <li>Password strength indicator</li>
+                        <li>Real-time validation feedback</li>
+                        <li>Success/error messages với animation</li>
+                        <li>Responsive design cho tất cả thiết bị</li>
+                    </ul>
+                </div>
+
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang chủ
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Thông tin</h3>
+                    <p><i class="fas fa-user"></i> MSSV: 710-12345</p>
+                    <p><i class="fas fa-book"></i> Môn học: JavaScript Programming</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Bài tập</h3>
+                    <ul>
+                        <li><a href="baitap01.html">Bài 1: Sản phẩm</a></li>
+                        <li><a href="baitap02.html">Bài 2: Đăng ký</a></li>
+                        <li><a href="baitap03.html">Bài 3: Đồng hồ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Bài tập JavaScript. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Constants
+        const STORAGE_KEY = 'registered_users';
+        const MAX_USERS = 50;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeForm();
+            loadUsersFromStorage();
+            setupEventListeners();
+        });
+
+        // Initialize form
+        function initializeForm() {
+            const form = document.getElementById('registrationForm');
+            const inputs = form.querySelectorAll('.form-input');
+
+            // Real-time validation
+            inputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    validateField(this.id);
+                    if (this.id === 'password') {
+                        updatePasswordStrength(this.value);
+                    }
+                });
+
+                input.addEventListener('blur', function () {
+                    validateField(this.id);
+                });
+            });
+
+            // Terms links
+            document.getElementById('termsLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                alert('Điều khoản dịch vụ:\n\n1. Dữ liệu được lưu trữ cục bộ trên trình duyệt\n2. Mật khẩu được hash trước khi lưu\n3. Bạn có thể xóa dữ liệu bất kỳ lúc nào\n4. Ứng dụng hoàn toàn chạy client-side');
+            });
+
+            document.getElementById('privacyLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                alert('Chính sách bảo mật:\n\n1. Không thu thập dữ liệu cá nhân\n2. Dữ liệu chỉ lưu trên trình duyệt của bạn\n3. Không chia sẻ thông tin với bên thứ ba\n4. Bảo mật mật khẩu bằng hash function');
+            });
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', function () {
+                resetForm();
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            const form = document.getElementById('registrationForm');
+            form.addEventListener('submit', handleSubmit);
+        }
+
+        // Handle form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            // Validate all fields
+            const isNameValid = validateField('name');
+            const isEmailValid = validateField('email');
+            const isPasswordValid = validateField('password');
+            const isConfirmPasswordValid = validateField('confirmPassword');
+            const isTermsValid = validateTerms();
+
+            if (isNameValid && isEmailValid && isPasswordValid &&
+                isConfirmPasswordValid && isTermsValid) {
+                saveUser();
+            }
+        }
+
+        // Validate individual field
+        function validateField(fieldId) {
+            const input = document.getElementById(fieldId);
+            const errorElement = document.getElementById(fieldId + 'Error');
+            let isValid = false;
+
+            switch (fieldId) {
+                case 'name':
+                    isValid = input.value.trim().length >= 2;
+                    break;
+
+                case 'email':
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    isValid = emailRegex.test(input.value.trim());
+                    break;
+
+                case 'password':
+                    const password = input.value;
+                    const hasUpperCase = /[A-Z]/.test(password);
+                    const hasLowerCase = /[a-z]/.test(password);
+                    const hasNumbers = /\d/.test(password);
+                    const hasMinimumLength = password.length >= 8;
+                    isValid = hasUpperCase && hasLowerCase && hasNumbers && hasMinimumLength;
+                    break;
+
+                case 'confirmPassword':
+                    const passwordValue = document.getElementById('password').value;
+                    isValid = input.value === passwordValue && input.value.length > 0;
+                    break;
+            }
+
+            // Update UI
+            input.classList.remove('error', 'success');
+            errorElement.style.display = 'none';
+
+            if (input.value.trim() === '') {
+                // Don't show error if empty (yet)
+            } else if (!isValid) {
+                input.classList.add('error');
+                errorElement.style.display = 'block';
+            } else {
+                input.classList.add('success');
+            }
+
+            return isValid;
+        }
+
+        // Validate terms checkbox
+        function validateTerms() {
+            const checkbox = document.getElementById('terms');
+            const errorElement = document.getElementById('termsError');
+
+            if (!checkbox.checked) {
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // Update password strength indicator
+        function updatePasswordStrength(password) {
+            const meter = document.getElementById('strengthMeter');
+
+            if (password.length === 0) {
+                meter.className = 'strength-meter';
+                meter.style.width = '0%';
+                return;
+            }
+
+            let strength = 0;
+
+            // Length check
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+
+            // Complexity checks
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            // Update meter
+            meter.className = 'strength-meter';
+            if (strength <= 2) {
+                meter.classList.add('strength-weak');
+            } else if (strength <= 4) {
+                meter.classList.add('strength-medium');
+            } else {
+                meter.classList.add('strength-strong');
+            }
+        }
+
+        // Save user to LocalStorage
+        function saveUser() {
+            // Get form values
+            const name = sanitizeInput(document.getElementById('name').value.trim());
+            const email = sanitizeInput(document.getElementById('email').value.trim());
+            const password = document.getElementById('password').value;
+
+            // Create user object (don't save plain password!)
+            const user = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                // In a real app, you would hash the password!
+                // For demonstration, we'll store a simple hash
+                passwordHash: simpleHash(password),
+                registrationDate: new Date().toLocaleString('vi-VN'),
+                timestamp: Date.now()
+            };
+
+            // Get existing users
+            let users = getUsersFromStorage();
+
+            // Check for duplicate email
+            if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+                alert('Email này đã được đăng ký!');
+                return;
+            }
+
+            // Limit number of users
+            if (users.length >= MAX_USERS) {
+                users.shift(); // Remove oldest user
+            }
+
+            // Add new user
+            users.push(user);
+
+            // Save to LocalStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+
+            // Show success message
+            showSuccessMessage();
+
+            // Reset form
+            resetForm();
+
+            // Reload users table
+            loadUsersFromStorage();
+        }
+
+        // Simple hash function (for demonstration only)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return 'hash_' + Math.abs(hash).toString(16);
+        }
+
+        // Sanitize input to prevent XSS
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+
+        // Get users from LocalStorage
+        function getUsersFromStorage() {
+            const usersJSON = localStorage.getItem(STORAGE_KEY);
+            return usersJSON ? JSON.parse(usersJSON) : [];
+        }
+
+        // Load users into table
+        function loadUsersFromStorage() {
+            const users = getUsersFromStorage();
+            const tableBody = document.getElementById('usersTableBody');
+            const noUsersElement = document.getElementById('noUsers');
+
+            if (users.length === 0) {
+                tableBody.innerHTML = '';
+                noUsersElement.style.display = 'block';
+                return;
+            }
+
+            noUsersElement.style.display = 'none';
+
+            // Sort by registration date (newest first)
+            users.sort((a, b) => b.timestamp - a.timestamp);
+
+            // Build table rows
+            let tableHTML = '';
+            users.forEach((user, index) => {
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${escapeHTML(user.name)}</td>
+                        <td>${escapeHTML(user.email)}</td>
+                        <td>${user.registrationDate}</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteUser(${user.id})">
+                                <i class="fas fa-trash"></i> Xóa
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableBody.innerHTML = tableHTML;
+        }
+
+        // Delete user from LocalStorage
+        function deleteUser(userId) {
+            if (!confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+                return;
+            }
+
+            let users = getUsersFromStorage();
+            users = users.filter(user => user.id !== userId);
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+            loadUsersFromStorage();
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            const message = document.getElementById('successMessage');
+            message.classList.add('show');
+
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 5000);
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('registrationForm').reset();
+
+            // Clear validation states
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(error => {
+                error.style.display = 'none';
+            });
+
+            // Reset password strength meter
+            const meter = document.getElementById('strengthMeter');
+            meter.className = 'strength-meter';
+            meter.style.width = '0%';
+        }
+
+        // Escape HTML for safe display
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Bài tập JavaScript</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>JS Exercises</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="baitap01.html"><i class="fas fa-shopping-cart"></i> Bài 1: Sản phẩm</a></li>
+                    <li><a href="baitap02.html"><i class="fas fa-user-plus"></i> Bài 2: Đăng ký</a></li>
+                    <li><a href="baitap03.html"><i class="fas fa-clock"></i> Bài 3: Đồng hồ</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> Giới thiệu</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Chào mừng đến với Bài tập JavaScript</h1>
+                <p class="subtitle">MSSV: 710-12345 (Thay bằng MSSV thực tế)</p>
+                <p>Trang web này chứa 3 bài tập JavaScript cơ bản với các chức năng khác nhau. Mỗi bài tập đều có phần
+                    giải thích logic và tư duy giải quyết vấn đề.</p>
+                <div class="hero-buttons">
+                    <a href="baitap01.html" class="btn btn-primary">Bài 1: Danh sách sản phẩm</a>
+                    <a href="baitap02.html" class="btn btn-secondary">Bài 2: Form đăng ký</a>
+                    <a href="baitap03.html" class="btn btn-tertiary">Bài 3: Đồng hồ đếm ngược</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/avatar.jpg" alt="Avatar" class="avatar">
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>3 Bài tập JavaScript</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Bài 1: Danh sách sản phẩm</h3>
+                    <p>Hiển thị danh sách sản phẩm với chức năng tìm kiếm không phân biệt hoa thường. Xử lý input an
+                        toàn và tối ưu hiệu suất.</p>
+                    <a href="baitap01.html" class="feature-link">Xem bài tập →</a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Bài 2: Form đăng ký</h3>
+                    <p>Form đăng ký với validation và lưu trữ dữ liệu vào LocalStorage. Xử lý bảo mật và sự kiện submit
+                        an toàn.</p>
+                    <a href="baitap02.html" class="feature-link">Xem bài tập →</a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Bài 3: Đồng hồ đếm ngược</h3>
+                    <p>Đồng hồ đếm ngược 10 phút với animation khi gần hết giờ. Quản lý memory và xử lý interval hiệu
+                        quả.</p>
+                    <a href="baitap03.html" class="feature-link">Xem bài tập →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="explanation">
+            <h2>Giải thích logic tư duy chung</h2>
+            <div class="explanation-content">
+                <h3>1. Xử lý input người dùng an toàn:</h3>
+                <p>Trong tất cả các bài tập, input người dùng đều được xử lý để tránh các lỗi bảo mật như XSS
+                    (Cross-Site Scripting). Chúng tôi sử dụng:</p>
+                <ul>
+                    <li>Escape HTML các ký tự đặc biệt</li>
+                    <li>Validate và sanitize input trước khi xử lý</li>
+                    <li>Giới hạn độ dài input hợp lý</li>
+                </ul>
+
+                <h3>2. Tối ưu hiệu suất:</h3>
+                <p>Tất cả các chức năng đều được tối ưu để chạy mượt mà:</p>
+                <ul>
+                    <li>Sử dụng debounce cho tìm kiếm</li>
+                    <li>Clear interval khi không cần thiết</li>
+                    <li>Tối ưu DOM manipulation</li>
+                </ul>
+
+                <h3>3. Responsive design:</h3>
+                <p>Giao diện được thiết kế responsive cho tất cả các thiết bị:</p>
+                <ul>
+                    <li>Mobile-first approach</li>
+                    <li>Sử dụng Flexbox và Grid</li>
+                    <li>Media queries cho các breakpoint</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Thông tin</h3>
+                    <p><i class="fas fa-user"></i> MSSV: 710-12345</p>
+                    <p><i class="fas fa-book"></i> Môn học: JavaScript Programming</p>
+                    <p><i class="fas fa-calendar"></i> Năm học: 2024</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="about.html">Giới thiệu</a></li>
+                        <li><a href="contact.html">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Bài tập</h3>
+                    <ul>
+                        <li><a href="baitap01.html">Bài 1: Sản phẩm</a></li>
+                        <li><a href="baitap02.html">Bài 2: Đăng ký</a></li>
+                        <li><a href="baitap03.html">Bài 3: Đồng hồ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Bài tập JavaScript. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
